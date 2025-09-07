@@ -14,11 +14,14 @@ data = {
     "section": input("Enter your section number: ")
 }
 
-params = {"UCID": "apb", "section": "101"}
+params = {"UCID": data["UCID"], "section": data["section"]}
 response = requests.get(api_url, params=params)
 if(response.status_code == 200 and response.json()):
     print("Cannot add duplicate results")
-if(response.status_code != 200):
-    print("Request information may contain errors")
 else:
     response = requests.post(api_url, json=data)
+
+    if(response.status_code == 200):
+        print("Data submitted")
+    else:
+        print('Error occured: ', response.text)
